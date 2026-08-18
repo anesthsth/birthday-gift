@@ -278,6 +278,7 @@
       padding: 0;
       margin: 0;
     }
+
     /* Bucket List Styling */
     .bucket-list-container {
       display: flex;
@@ -361,6 +362,7 @@
       background: #f1f3f5;
       color: #6c757d;
     }
+
     .travel-item {
       display: flex;
       align-items: center;
@@ -509,7 +511,7 @@
     <!-- App Header -->
     <header>
       <h1>Happy Birthday, Angelius 🎀</h1>
-      <p>From your birthday twin, Anest (hercules) </p>
+      <p>From your birthday twin, Anest (hercules)</p>
     </header>
 
     <!-- Multi-Page Content Container -->
@@ -550,7 +552,7 @@
         </div>
       </div>
 
-<!-- PAGE 2: OUR BUCKET LIST & MEMORIES -->
+      <!-- PAGE 2: OUR BUCKET LIST & MEMORIES -->
       <div id="page2" class="page">
         
         <!-- Header -->
@@ -681,7 +683,7 @@
           </div>
         </div>
 
-<!-- Photos & Video Section -->
+        <!-- Photos & Video Section -->
         <div class="gallery">
 
           <!-- Photo 1: Rome -->
@@ -708,6 +710,9 @@
             </video>
             <div class="caption">FaceTime calls that make the distance feel smaller 🤍</div>
           </div>
+
+        </div>
+      </div>
 
       <!-- PAGE 3: INSTANT MOOD BOOSTER -->
       <div id="page3" class="page">
@@ -786,14 +791,21 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
 
-      document.getElementById(pageId).classList.add('active');
-      btn.classList.add('active');
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+      if (btn) {
+        btn.classList.add('active');
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* FLOATING HEARTS, BOWS & CAKES */
     const floatIcons = ['🎀', '🎂', '🤍', '💖', '🐾', '✨'];
     function createHeart(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
       heart.innerHTML = floatIcons[Math.floor(Math.random() * floatIcons.length)];
@@ -801,7 +813,7 @@
       heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
       heart.style.fontSize = (Math.random() * 8 + 14) + 'px';
       
-      document.getElementById(containerId).appendChild(heart);
+      container.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
@@ -858,6 +870,7 @@
         colors: ['#ff4d6d', '#ff85a1', '#ffd166', '#ffffff']
       });
     }
+
     /* BUCKET LIST INTERACTIVE CHECK */
     function toggleBucket(checkbox) {
       const item = checkbox.closest('.bucket-item');
