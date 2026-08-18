@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday to Us! For Angelius, From Anestis 🎂🎀</title>
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #fff0f5;
+      --card-bg: #ffffff;
+      --primary: #ff4d6d;
+      --primary-hover: #c9184a;
+      --hk-pink: #ff85a1;
+      --hk-light: #ffe5ec;
+      --text: #2b2d42;
+      --subtext: #6c757d;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Floating Icons Background */
+    .heart-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -20px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
+    }
+
+    /* === ENTRANCE PAGE STYLING === */
+    #entrancePage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
+
+    #entrancePage.exit {
+      animation: fadeOut 0.8s ease-in-out forwards;
+      pointer-events: none;
+    }
+
+    .entrance-badge {
+      font-size: 3rem;
+      margin-bottom: 8px;
+    }
+
+    #entrancePage h1 {
+      color: var(--primary);
+      font-size: 2.3rem;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+
+    #entrancePage p {
+      color: var(--subtext);
+      font-size: 1.1rem;
+      max-width: 320px;
+      line-height: 1.5;
+      margin-bottom: 35px;
+    }
+
+    .start-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 77, 109, 0.35);
+      transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .start-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* === MAIN APP STYLING === */
+    #mainApp {
+      display: none;
+      opacity: 0;
+      animation: fadeInApp 0.8s 0.2s ease-in-out forwards;
+      padding-bottom: 85px;
+    }
+
+    @keyframes fadeInApp {
+      from { display: none; opacity: 0; transform: translateY(20px); }
+      to { display: block; opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; visibility: visible; }
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 16px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+
+    header p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: var(--subtext);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out forwards;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.08);
+      border: 1.5px solid var(--hk-light);
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.25rem;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      perspective: 1000px;
+      height: 105px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+
+    .flip-card-front {
+      background: var(--hk-light);
+      border: 1.5px dashed var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .flip-card-back {
+      background: var(--primary);
+      color: white;
+      transform: rotateY(180deg);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .photo-card {
+      background: #fafafa;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #eee;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption {
+      padding: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #495057;
+      text-align: center;
+    }
+
+    .travel-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .travel-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--hk-light);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .mood-box {
+      text-align: center;
+      padding: 24px 12px;
+    }
+
+    .mood-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+      transition: transform 0.1s;
+    }
+
+    .mood-btn:active {
+      transform: scale(0.95);
+    }
+
+    .mood-display {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--primary-hover);
+      min-height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--hk-light);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .interactive-area {
+      min-height: 140px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .action-btn {
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #adb5bd;
+      color: white;
+      position: absolute;
+    }
+
+    .success-msg {
+      display: none;
+      background: #d8f3dc;
+      color: #2d6a4f;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      color: var(--subtext);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .nav-item .icon {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Icons -->
+  <div class="heart-bg" id="heartContainer"></div>
+
+  <!-- === ENTRANCE PAGE === -->
+  <div id="entrancePage">
+    <div class="heart-bg" id="entranceHeartContainer"></div>
+    
+    <div class="entrance-badge">🎂 🎀 🎂</div>
+    <h1>Happy Birthday to Us!</h1>
+    <p>For my favorite birthday twin, Angelius. A special place built just for you by Anestis... 🤍</p>
+    <button class="start-btn" onclick="startApp()">OPEN YOUR GIFT ✨</button>
+  </div>
+
+  <!-- === MAIN APP === -->
+  <div id="mainApp">
+    
+    <!-- App Header -->
+    <header>
+      <h1>Happy Birthday, Angelius 🎀</h1>
+      <p>From your birthday twin, Anestis • Step by Step</p>
+    </header>
+
+    <!-- Multi-Page Content Container -->
+    <div class="container">
+
+      <!-- PAGE 1: BIRTHDAY LETTER & REBUILDING -->
+      <div id="page1" class="page active">
+        <div class="card">
+          <h2>To My Favorite Birthday Twin 🎂</h2>
+          <p>Happy Birthday, Angelius! Out of everyone in the entire world, sharing the exact same birthday with you is honestly my favorite thing.</p>
+          <p>I know things got tough recently and we had our fight. I said things in the heat of the moment that I truly regret and wish I could take back. But more than anything, I want to keep getting to know you, rebuilding our connection, and taking every single step together at our own pace.</p>
+          <p>You mean the world to me, and there's nobody else I'd rather celebrate this day with.</p>
+        </div>
+
+        <div class="card">
+          <h2>Tap Each Birthday Note 🐾</h2>
+          
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">Why we are the best birthday duo... 🎂</div>
+              <div class="flip-card-back">Because the universe knew one of us wouldn't be enough to handle all the fun (and chaos)!</div>
+            </div>
+          </div>
+
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">My birthday promise to you... 🎀</div>
+              <div class="flip-card-back">To listen more, speak with gentle love and respect, and always cherish your soft heart.</div>
+            </div>
+          </div>
+
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">Taking things step by step... 🤍</div>
+              <div class="flip-card-back">No rush, no pressure. Just you and me learning and choosing each other every day.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: FUNNY MEMORIES & TRAVEL -->
+      <div id="page2" class="page">
+        <div class="card">
+          <h2>Memories & Next Trips ✈️</h2>
+          <p style="font-size: 0.9rem; color: var(--subtext);">The best birthday present will always be our next ticket and adventure together.</p>
+        </div>
+
+        <div class="card">
+          <h2>Our Next Birthday Trip Checklist 🗺️</h2>
+          <ul class="travel-list">
+            <li class="travel-item">✈️ Packing our bags and getting on the plane</li>
+            <li class="travel-item">☕ Finding cute cafes with Hello Kitty themed treats</li>
+            <li class="travel-item">📸 Taking 100 blurry funny photos in new streets</li>
+            <li class="travel-item">🎂 Double birthday cake celebration wherever we land</li>
+          </ul>
+        </div>
+
+        <div class="gallery">
+          <div class="photo-card">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Funny memory 1">
+            <div class="caption">When we act like complete goofballs together 🤪</div>
+          </div>
+
+          <div class="photo-card">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500" alt="Funny memory 2">
+            <div class="caption">Me making you laugh on FaceTime 😂</div>
+          </div>
+
+          <div class="photo-card">
+            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=500" alt="Funny memory 3">
+            <div class="caption">My forever travel buddy and partner in crime 🤍</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: INSTANT MOOD BOOSTER -->
+      <div id="page3" class="page">
+        <div class="card mood-box">
+          <h2>Birthday Smile Generator 🎀</h2>
+          <p style="font-size: 0.9rem; color: var(--subtext); margin-bottom: 20px;">Tap the button whenever you need a birthday laugh or sweet reminder.</p>
+          
+          <button class="mood-btn" onclick="generateReminders()">Tap for Birthday Love 🎂</button>
+
+          <div class="mood-display" id="moodMessage">
+            Tap the button above! 🐾
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: THE QUESTION -->
+      <div id="page4" class="page">
+        <div class="card" style="text-align: center;">
+          <h2>One Birthday Question...</h2>
+          <p>Will you continue taking things step by step with me, exploring the world, and sharing birthdays forever?</p>
+
+          <div class="interactive-area" id="btnContainer">
+            <button id="yesBtn" class="action-btn" onclick="handleYes()">Yes, happy birthday to us! 🥰</button>
+            <button id="noBtn" class="action-btn" ontouchstart="dodgeButton()" onmouseover="dodgeButton()">No 😜</button>
+          </div>
+
+          <div id="successMsg" class="success-msg">
+            <h3>BEST BIRTHDAY EVER! 🎂 🎀 🎉</h3>
+            <p>I love you so much, Angelius. Happy Birthday to us, and here's to our fresh start and many more memories together!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <nav>
+      <button class="nav-item active" onclick="switchPage('page1', this)">
+        <span class="icon">🎂</span>
+        <span>Letter</span>
+      </button>
+      <button class="nav-item" onclick="switchPage('page2', this)">
+        <span class="icon">✈️</span>
+        <span>Travel</span>
+      </button>
+      <button class="nav-item" onclick="switchPage('page3', this)">
+        <span class="icon">🎀</span>
+        <span>Booster</span>
+      </button>
+      <button class="nav-item" onclick="switchPage('page4', this)">
+        <span class="icon">🤍</span>
+        <span>Us</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    /* ENTRANCE LOGIC */
+    function startApp() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff4d6d', '#ff85a1', '#ffffff', '#ffd166']
+      });
+
+      const entrance = document.getElementById('entrancePage');
+      entrance.classList.add('exit');
+
+      const app = document.getElementById('mainApp');
+      app.style.display = 'block';
+    }
+
+    /* MAIN APP NAVIGATION */
+    function switchPage(pageId, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(pageId).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* FLOATING HEARTS, BOWS & CAKES */
+    const floatIcons = ['🎀', '🎂', '🤍', '💖', '🐾', '✨'];
+    function createHeart(containerId) {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = floatIcons[Math.floor(Math.random() * floatIcons.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      heart.style.fontSize = (Math.random() * 8 + 14) + 'px';
+      
+      document.getElementById(containerId).appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(() => createHeart('heartContainer'), 600);
+    setInterval(() => createHeart('entranceHeartContainer'), 400);
+
+    /* BIRTHDAY MOOD BOOSTER MESSAGES */
+    const loveMessages = [
+      "Happy Birthday to the most gorgeous birthday twin ever, Angelius! 🎂",
+      "Who else could share our exact birthday and look this cute? Only you 🎀",
+      "I love learning new things about you every single day 🤍",
+      "I'm sorry for my mistakes, and I'm so grateful we're doing this step by step.",
+      "Ready to book our next flight whenever you are! ✈️",
+      "Sending you infinite Hello Kitty hugs on our special day! 🫂"
+    ];
+
+    function generateReminders() {
+      const messageElement = document.getElementById('moodMessage');
+      const randomMsg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+      messageElement.textContent = randomMsg;
+      
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { y: 0.7 },
+        colors: ['#ff4d6d', '#ff85a1', '#ffd166']
+      });
+    }
+
+    /* DODGING NO BUTTON FOR PHONE TOUCH */
+    function dodgeButton() {
+      const btn = document.getElementById('noBtn');
+      const container = document.getElementById('btnContainer');
+      const containerRect = container.getBoundingClientRect();
+
+      const newX = Math.random() * (containerRect.width - btn.offsetWidth);
+      const newY = Math.random() * (containerRect.height - btn.offsetHeight);
+
+      btn.style.left = `${newX}px`;
+      btn.style.top = `${newY}px`;
+    }
+
+    /* YES BUTTON CELEBRATION */
+    function handleYes() {
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('noBtn').style.display = 'none';
+
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ff4d6d', '#ff85a1', '#ffd166', '#ffffff']
+      });
+    }
+  </script>
+</body>
+</html>
