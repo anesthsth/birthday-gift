@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday to Us! For Angelius, From Anestis 🎂🎀</title>
+  <title>Happy Birthday to Us! For Angelius, From Anest 🎂🎀</title>
   
   <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -278,7 +278,89 @@
       padding: 0;
       margin: 0;
     }
+    /* Bucket List Styling */
+    .bucket-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
 
+    .bucket-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid #f0f0f0;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .bucket-item input[type="checkbox"] {
+      display: none;
+    }
+
+    .custom-check {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      margin-right: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .bucket-item input[type="checkbox"]:checked + .custom-check {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .bucket-item input[type="checkbox"]:checked + .custom-check::after {
+      content: '✓';
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .bucket-item.done {
+      background: #fff0f5;
+      border-color: var(--hk-light);
+    }
+
+    .destination-text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .progress-tag {
+      background: #ffe5ec;
+      color: var(--primary);
+      border: 1px solid #ffb3c1;
+    }
+
+    .note-tag {
+      background: #f1f3f5;
+      color: #6c757d;
+    }
     .travel-item {
       display: flex;
       align-items: center;
@@ -417,7 +499,7 @@
     
     <div class="entrance-badge">🎂 🎀 🎂</div>
     <h1>Happy Birthday to Us!</h1>
-    <p>For my favorite birthday twin, Angelius. A special place built just for you by Anestis... 🤍</p>
+    <p>For my favorite person AND birthday twin, Angelius. A special place built just for you by Me... 🤍</p>
     <button class="start-btn" onclick="startApp()">OPEN YOUR GIFT ✨</button>
   </div>
 
@@ -438,17 +520,17 @@
         <div class="card">
           <h2>To My Favorite Birthday Twin 🎂</h2>
           <p>Happy Birthday, Angelius! Out of everyone in the entire world, sharing the exact same birthday with you is honestly my favorite thing.</p>
-          <p>I know things got tough recently and we had our fight. I said things in the heat of the moment that I truly regret and wish I could take back. But more than anything, I want to keep getting to know you, rebuilding our connection, and taking every single step together at our own pace.</p>
+          <p>I know things got tough recently and we had many fights. I said things in the heat of the moment that I truly regret and wish I could take back. But more than anything, I want to keep getting to know you, rebuilding our connection, and taking every single step together at our own pace.</p>
           <p>You mean the world to me, and there's nobody else I'd rather celebrate this day with.</p>
         </div>
-
+  
         <div class="card">
           <h2>Tap Each Birthday Note 🐾</h2>
           
           <div class="flip-card" onclick="this.classList.toggle('flipped')">
             <div class="flip-card-inner">
-              <div class="flip-card-front">Why we are the best birthday duo... 🎂</div>
-              <div class="flip-card-back">Because the universe knew one of us wouldn't be enough to handle all the fun (and chaos)!</div>
+              <div class="flip-card-front">Sharing this exact day... 🎂</div>
+              <div class="flip-card-back">Out of everyone in the world, having the same birthday with you will always be special to me.</div>
             </div>
           </div>
 
@@ -468,39 +550,155 @@
         </div>
       </div>
 
-      <!-- PAGE 2: FUNNY MEMORIES & TRAVEL -->
+<!-- PAGE 2: OUR BUCKET LIST & MEMORIES -->
       <div id="page2" class="page">
-        <div class="card">
-          <h2>Memories & Next Trips ✈️</h2>
-          <p style="font-size: 0.9rem; color: var(--subtext);">The best birthday present will always be our next ticket and adventure together.</p>
+        
+        <!-- Header -->
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 1.8rem; margin-bottom: 4px;">✈️ 🌴 🗺️</div>
+          <h2 style="margin-bottom: 4px;">Bucket List 🤍</h2>
+          <p style="font-size: 0.95rem; color: var(--primary); font-weight: 600; margin: 0;">
+            ( yapi Anest + Angelius )
+          </p>
+          <p style="font-size: 0.85rem; color: var(--subtext); margin-top: 6px;">
+            The places we've conquered, and every adventure still waiting for us.
+          </p>
         </div>
 
+        <!-- Interactive Bucket List Card -->
         <div class="card">
-          <h2>Our Next Birthday Trip Checklist 🗺️</h2>
-          <ul class="travel-list">
-            <li class="travel-item">✈️ Packing our bags and getting on the plane</li>
-            <li class="travel-item">☕ Finding cute cafes with Hello Kitty themed treats</li>
-            <li class="travel-item">📸 Taking 100 blurry funny photos in new streets</li>
-            <li class="travel-item">🎂 Double birthday cake celebration wherever we land</li>
-          </ul>
+          <h2 style="font-size: 1.15rem; display: flex; align-items: center; justify-content: space-between;">
+            <span>Our Destinations 📍</span>
+            <span style="font-size: 0.8rem; font-weight: normal; color: var(--subtext);">Tap to check/uncheck</span>
+          </h2>
+
+          <div class="bucket-list-container">
+
+            <!-- Completed / In Progress Items -->
+            <label class="bucket-item done">
+              <input type="checkbox" checked onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Italy 🇮🇹</span>
+            </label>
+
+            <label class="bucket-item in-progress">
+              <input type="checkbox" checked onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Egypt 🇪🇬 <span class="tag progress-tag">In progress</span></span>
+            </label>
+
+            <label class="bucket-item done">
+              <input type="checkbox" checked onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Santorini 🇬🇷 <span class="tag note-tag">(only in June!)</span></span>
+            </label>
+
+            <label class="bucket-item done">
+              <input type="checkbox" checked onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Denmark 🇩🇰 <span class="tag note-tag">(business trip!)</span></span>
+            </label>
+
+            <!-- Upcoming Destinations -->
+            <label class="bucket-item in-progress">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Pig's Beach 🐷 🏝️ <span class="tag progress-tag">In progress</span></span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Albania 🇦🇱 <span class="tag note-tag">(to ❤️ visit nonna)</span></span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Romania 🧛 <span class="tag note-tag">(Dracula park)</span></span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿 🏰</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Barcelona 🇪🇸 🏖️</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Bali 🌴 🥥</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Japan 🌸 🍣</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">London 🇬🇧 ☕</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Portugal 🇵🇹 <span class="tag note-tag">(maybe)</span></span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Colombia 🇨🇴 🥑</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Argentina 🇦🇷 ⛰️</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Mexico 🇲🇽 🌮</span>
+            </label>
+
+            <label class="bucket-item">
+              <input type="checkbox" onchange="toggleBucket(this)">
+              <span class="custom-check"></span>
+              <span class="destination-text">Dominican Republic 🇩🇴 <span class="tag note-tag">(latina mami house)</span></span>
+            </label>
+
+          </div>
         </div>
 
+        <!-- Photos Section -->
         <div class="gallery">
           <div class="photo-card">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Funny memory 1">
-            <div class="caption">When we act like complete goofballs together 🤪</div>
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Memory 1">
+            <div class="caption">Some of our best moments together 📸</div>
           </div>
 
           <div class="photo-card">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500" alt="Funny memory 2">
-            <div class="caption">Me making you laugh on FaceTime 😂</div>
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500" alt="FaceTime memory">
+            <div class="caption">FaceTime calls that make the distance feel smaller 🤍</div>
           </div>
 
           <div class="photo-card">
-            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=500" alt="Funny memory 3">
-            <div class="caption">My forever travel buddy and partner in crime 🤍</div>
+            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=500" alt="Travel memory">
+            <div class="caption">Counting down until our next adventure ✈️</div>
           </div>
         </div>
+
       </div>
 
       <!-- PAGE 3: INSTANT MOOD BOOSTER -->
@@ -651,6 +849,21 @@
         origin: { y: 0.6 },
         colors: ['#ff4d6d', '#ff85a1', '#ffd166', '#ffffff']
       });
+    }
+    /* BUCKET LIST INTERACTIVE CHECK */
+    function toggleBucket(checkbox) {
+      const item = checkbox.closest('.bucket-item');
+      if (checkbox.checked) {
+        item.classList.add('done');
+        confetti({
+          particleCount: 20,
+          spread: 45,
+          origin: { y: 0.8 },
+          colors: ['#ff4d6d', '#ff85a1', '#ffd166']
+        });
+      } else {
+        item.classList.remove('done');
+      }
     }
   </script>
 </body>
